@@ -1,8 +1,8 @@
 require_relative 'spec_helper'
 
-describe "Market" do 
+describe "Product" do 
   describe "#initialize" do
-    it "Creates an instance of market" do 
+    it "Creates an instance of Product" do 
       product = FarMar::Product.new(1, "Dry Beets", 1)
 
       expect(product).must_be_kind_of FarMar::Product

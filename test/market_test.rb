@@ -2,7 +2,7 @@ require_relative 'spec_helper'
 
 describe "Market" do 
   describe "#initialize" do
-    it "Creates an instance of market" do 
+    it "Creates an instance of Market" do 
       market = FarMar::Market.new(1, "People's Co-op Farmers Market", "30th and Burnside", "Portland","Multnomah", "Oregon", "97202"
       )
 
