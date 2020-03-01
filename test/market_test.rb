@@ -1,11 +1,20 @@
 require_relative 'spec_helper'
 
-describe "tests" do 
-  it "Should run some tests" do 
-    true.must_equal false
-  end 
+describe "Market" do 
+  describe "#initialize" do
+    it "Creates an instance of market" do 
+      market = FarMar::Market.new(1, "People's Co-op Farmers Market", "30th and Burnside", "Portland","Multnomah", "Oregon", "97202"
+      )
 
-  it "Should have access to stuff from market.rb" do 
-    expect(DAN_CONST).must_equal 42
+      market.must_be_kind_of FarMar::Market
+    end 
+
+    it "Keeps track of ID" do 
+      id = 1337
+      market = FarMar::Market.new(id, "People's Co-op Farmers Market", "30th and Burnside", "Portland","Multnomah", "Oregon", "97202"
+      ) 
+      market.must_respond_to :id 
+      market.id.must_equal id
+    end 
   end 
 end 
