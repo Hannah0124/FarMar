@@ -126,4 +126,50 @@ describe "Product" do
       expect(product.id).must_equal id
     end 
   end 
+
+  describe "find_by_vendor" do
+    it "Does something if the vendor_id is invalid" do 
+      vendor_id = "not an id"
+
+      products = FarMar::Product.find_by_vendor(vendor_id) 
+      expect(products).must_be_kind_of Array 
+      expect(products).must_be_empty
+    end  
+
+    it "Returns an empty array if no products match" do 
+      # Assumption: no products have vendor_id 999999
+      vendor_id = 999999
+
+      products = FarMar::Product.find_by_vendor(vendor_id) 
+      expect(products).must_be_kind_of Array 
+      expect(products).must_be_empty
+
+    end 
+
+    it "Returns an array of one Product if one product matches" do 
+      vendor_id = 3
+
+      products = FarMar::Product.find_by_vendor(vendor_id)
+      expect(products).must_be_kind_of Array 
+      expect(products.length).must_equal 1 
+
+      products.each do |product|
+        expect(product).must_be_kind_of FarMar::Product
+        expect(product.vendor_id).must_equal vendor_id
+      end 
+    end 
+
+    it "Returns an array of many Products if many product match" do 
+      vendor_id = 4
+
+      products = FarMar::Product.find_by_vendor(vendor_id)
+      expect(products).must_be_kind_of Array 
+      expect(products.length).must_equal 3 
+
+      products.each do |product|
+        expect(product).must_be_kind_of FarMar::Product
+        expect(product.vendor_id).must_equal vendor_id
+      end 
+    end  
+  end 
 end 

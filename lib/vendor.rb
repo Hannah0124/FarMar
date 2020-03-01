@@ -17,6 +17,10 @@ module FarMar
       @employee_count = employee_count
       @market_id = market_id
     end
+
+    def products
+      Product.find_by_vendor(@id) 
+    end 
     
     def self.all 
       CSV.readlines("support/vendors.csv").map do |line|

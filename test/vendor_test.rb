@@ -66,6 +66,45 @@ describe "Vendor" do
     end 
   end 
 
+  describe "#products" do 
+    it "Returns an empty array if no products match" do 
+      vendor = FarMar::Vendor.new(999999, "test vendor", 10, 10)
+
+      products = vendor.products
+      expect(products).must_be_kind_of Array 
+      expect(products).must_be_empty
+    end 
+
+    it "Returns an array with one Product if one match" do
+      vendor_id = 3
+      vendor = FarMar::Vendor.new(vendor_id, "test vendor", 10, 10)
+
+      products = vendor.products
+
+      expect(products).must_be_kind_of Array 
+      expect(products.length).must_equal 1 
+
+      products.each do |product|
+        expect(product).must_be_kind_of FarMar::Product
+        expect(product.vendor_id).must_equal vendor.id
+      end  
+    end 
+
+    it "Returns an array of many Products if many match" do 
+      vendor_id = 4
+      vendor = FarMar::Vendor.new(vendor_id, "test vendor", 10, 10)
+
+      products = FarMar::Product.find_by_vendor(vendor_id)
+      expect(products).must_be_kind_of Array 
+      expect(products.length).must_equal 3 
+
+      products.each do |product|
+        expect(product).must_be_kind_of FarMar::Product
+        expect(product.vendor_id).must_equal vendor.id
+      end
+    end  
+  end 
+
   describe "all" do 
     it "Returns an array" do 
       vendors = FarMar::Vendor.all 
