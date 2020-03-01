@@ -18,13 +18,13 @@ describe "Market" do
     end 
 
     it "Requires a integer ID" do 
-      proc {
+      expect {
         FarMar::Market.new("not an integer", "test", "test", "test", "test", "test", "test")
       }.must_raise ArgumentError
     end 
 
     it "Requires a positive ID" do 
-      proc {
+      expect {
         FarMar::Market.new(-10, "test", "test", "test", "test", "test", "test")
       }.must_raise ArgumentError
     end 
@@ -37,7 +37,7 @@ describe "Market" do
       expect(market.country).must_equal country
     end 
 
-    it "Keeps track of ID" do 
+    it "Keeps track of state" do 
       state = "test"
       market = FarMar::Market.new(1, "People's Co-op Farmers Market", "30th and Burnside", "Portland","Multnomah", state, "97202"
       ) 
@@ -45,7 +45,7 @@ describe "Market" do
       expect(market.state).must_equal state
     end 
 
-    it "Keeps track of ID" do 
+    it "Keeps track of zip code" do 
       zip = "98107"
       market = FarMar::Market.new(1, "People's Co-op Farmers Market", "30th and Burnside", "Portland","Multnomah", "Oregon", zip
       ) 
