@@ -76,18 +76,34 @@ describe "Market" do
 
     it "Gets the first Market from the file" do 
       markets = FarMar::Market.all
-      markets.first.id.must_equal 1
+      expect(markets.first.id).must_equal 1
 
     end 
 
     it "Gets the last Market from the file" do 
       markets = FarMar::Market.all
-      markets.last.id.must_equal 500
+      expect(markets.last.id).must_equal 500
     end 
   end 
 
-  # describe "find" do 
+  describe "find" do 
+    it "Returns nil if the market does not exist" do 
+      market = FarMar::Market.find(12345)
+      expect(market).must_be_nil
+    end 
 
-  # end 
+    it "Finds the first market" do 
+      id = 1
+      market = FarMar::Market.find(id)
+      expect(market).must_be_kind_of FarMar::Market
+      expect(market.id).must_equal id
+    end 
 
+    it "Finds the last market" do 
+      id = 500
+      market = FarMar::Market.find(id)
+      expect(market).must_be_kind_of FarMar::Market
+      expect(market.id).must_equal id
+    end 
+  end 
 end 
