@@ -42,6 +42,37 @@ describe "Product" do
       expect(product).must_respond_to :vendor_id
       expect(product.vendor_id).must_equal vendor_id
     end 
+
+    it "Requires a integer vendor_id" do 
+      expect {
+        FarMar::Product.new(1, "Dry Beets", "Not an integer")
+      }.must_raise ArgumentError
+    end 
+
+    it "Requires a positive vendor_id" do 
+      expect {
+        FarMar::Product.new(1, "Dry Beets", -10)
+      }.must_raise ArgumentError
+    end 
+  end 
+
+  describe "#vendor" do
+    it "Returns an instance of Vendor with the correct ID" do
+      product = FarMar::Product.new(1337, "test product", 10)
+      vendor = product.vendor 
+      expect(vendor).must_be_kind_of FarMar::Vendor 
+      expect(vendor.id).must_equal product.vendor_id
+    end 
+
+    it "Returns nil when the vendor_id doesn't correspond to a real vendor" do 
+      # Assumption: There is no vendor 9999
+      vendor_id = 9999 
+      expect(FarMar::Product.find(vendor_id)).must_be_nil "Whoops, didn't expect vendor #{vendor_id} to exist, which invalidates the test"
+
+      product = FarMar::Product.new(1337, "test product", vendor_id)
+      vendor = product.vendor
+      expect(vendor).must_be_nil
+    end 
   end 
 
   describe "all" do 
