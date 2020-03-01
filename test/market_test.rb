@@ -53,4 +53,41 @@ describe "Market" do
       expect(market.zip).must_equal zip
     end 
   end 
+
+
+  describe "all" do 
+    it "Returns an array" do 
+      markets = FarMar::Market.all 
+      expect(markets).must_be_kind_of Array
+    end 
+
+    it "Returns an array full of Markets" do
+      markets = FarMar::Market.all 
+    
+      markets.each do |market|
+       expect(market).must_be_kind_of FarMar::Market
+      end 
+    end 
+
+    it "Returns an the correct number of Markets" do 
+      markets = FarMar::Market.all
+      expect(markets.length).must_equal 500
+    end 
+
+    it "Gets the first Market from the file" do 
+      markets = FarMar::Market.all
+      markets.first.id.must_equal 1
+
+    end 
+
+    it "Gets the last Market from the file" do 
+      markets = FarMar::Market.all
+      markets.last.id.must_equal 500
+    end 
+  end 
+
+  # describe "find" do 
+
+  # end 
+
 end 
