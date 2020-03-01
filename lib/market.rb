@@ -1,14 +1,11 @@
+require_relative 'loadable'
+
 module FarMar 
-  class Market 
-    attr_reader :id, :name, :address, :city, :country, :state, :zip 
+  class Market < Loadable
+    attr_reader :name, :address, :city, :country, :state, :zip 
     
     def initialize(id, name, address, city, country, state, zip)
-
-      unless (id.instance_of? Integer) && (id > 0)
-        raise ArgumentError.new("ID must be a positive integer (got #{id})")
-      end 
-
-      @id = id
+      super (id)
       @name = name 
       @address = address 
       @city = city 
@@ -17,15 +14,12 @@ module FarMar
       @zip = zip
     end 
 
-    def self.all 
-      CSV.readlines("support/markets.csv").map do |line|
-        Market.new(line[0].to_i, line[1], line[2], line[3], line[4], line[5], line[6])    
-      end 
+    def self.from_csv_line(line)
+      self.new(line[0].to_i, line[1], line[2], line[3], line[4], line[5], line[6])
     end 
 
-    def self.find(id)
-      all.select { |market| market.id == id }.first
+    def self.csv_filename 
+      "support/markets.csv"
     end 
-
   end 
 end 

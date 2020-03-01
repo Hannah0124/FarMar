@@ -77,7 +77,6 @@ describe "Market" do
     it "Gets the first Market from the file" do 
       markets = FarMar::Market.all
       expect(markets.first.id).must_equal 1
-
     end 
 
     it "Gets the last Market from the file" do 

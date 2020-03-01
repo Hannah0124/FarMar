@@ -1,18 +1,14 @@
 module FarMar 
-  class Product
-    attr_reader :id, :name, :vendor_id
+  class Product < Loadable
+    attr_reader :name, :vendor_id
 
     def initialize(id, name, vendor_id)
-
-      unless (id.instance_of? Integer) && (id > 0)
-        raise ArgumentError.new("ID must be a positive integer (got #{id})")
-      end 
+      super(id)
 
       unless (vendor_id.instance_of? Integer) && (vendor_id > 0)
         raise ArgumentError.new("Vendor ID must be a positive integer (got #{vendor_id})")
       end 
 
-      @id = id
       @name = name 
       @vendor_id = vendor_id
     end 
@@ -23,14 +19,12 @@ module FarMar
     end 
 
   
-    def self.all 
-      CSV.readlines("support/products.csv").map do |line|
-        Product.new(line[0].to_i, line[1], line[2].to_i)    
-      end 
+    def self.csv_filename 
+      "support/products.csv"
     end 
-  
-    def self.find(id)
-      all.select { |product| product.id == id }.first
+
+    def self.from_csv_line(line)
+      self.new(line[0].to_i, line[1], line[2].to_i)
     end 
 
     def self.find_by_vendor(vendor_id)
