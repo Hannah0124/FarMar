@@ -18,13 +18,13 @@ describe "Vendor" do
 
     it "Requires a integer ID" do 
       expect {
-        vendor = FarMar::Vendor.new("Not an integer", "Feil-Farrell", 8, 1)
+        FarMar::Vendor.new("Not an integer", "Feil-Farrell", 8, 1)
       }.must_raise ArgumentError
     end 
 
     it "Requires a positive ID" do 
       expect {
-        vendor = FarMar::Vendor.new(-10, "Feil-Farrell", 8, 1)
+        FarMar::Vendor.new(-10, "Feil-Farrell", 8, 1)
       }.must_raise ArgumentError
     end 
 
@@ -55,14 +55,66 @@ describe "Vendor" do
 
     it "Requires a integer market ID" do 
       expect {
-        vendor = FarMar::Vendor.new(1, "Feil-Farrell", 8, "Not an integer")
+        FarMar::Vendor.new(1, "Feil-Farrell", 8, "Not an integer")
       }.must_raise ArgumentError
     end 
 
     it "Requires a positive market ID" do 
       expect {
-        vendor = FarMar::Vendor.new(1, "Feil-Farrell", 8, -10)
+        FarMar::Vendor.new(1, "Feil-Farrell", 8, -10)
       }.must_raise ArgumentError
+    end 
+  end 
+
+  describe "all" do 
+    it "Returns an array" do 
+      vendors = FarMar::Vendor.all 
+      expect(vendors).must_be_kind_of Array
+    end 
+
+    it "Returns an array full of Vendors" do
+      vendors = FarMar::Vendor.all 
+    
+      vendors.each do |vendor|
+       expect(vendor).must_be_kind_of FarMar::Vendor
+      end 
+    end 
+
+    it "Returns an the correct number of Vendors" do 
+      vendors = FarMar::Vendor.all
+      expect(vendors.length).must_equal 2690
+    end 
+
+    it "Gets the first Vendor from the file" do 
+      vendors = FarMar::Vendor.all
+      expect(vendors.first.id).must_equal 1
+
+    end 
+
+    it "Gets the last Vendor from the file" do 
+      vendors = FarMar::Vendor.all
+      expect(vendors.last.id).must_equal 2690
+    end 
+  end 
+
+  describe "find" do 
+    it "Returns nil if the vendor does not exist" do 
+      vendor = FarMar::Vendor.find(12345)
+      expect(vendor).must_be_nil
+    end 
+
+    it "Finds the first vendor" do 
+      id = 1
+      vendor = FarMar::Vendor.find(id)
+      expect(vendor).must_be_kind_of FarMar::Vendor
+      expect(vendor.id).must_equal id
+    end 
+
+    it "Finds the last vendor" do 
+      id = 500
+      vendor = FarMar::Vendor.find(id)
+      expect(vendor).must_be_kind_of FarMar::Vendor
+      expect(vendor.id).must_equal id
     end 
   end 
 end 

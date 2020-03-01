@@ -16,6 +16,16 @@ module FarMar
       @name = name 
       @employee_count = employee_count
       @market_id = market_id
+    end
+    
+    def self.all 
+      CSV.readlines("support/vendors.csv").map do |line|
+        Vendor.new(line[0].to_i, line[1], line[1], line[3].to_i)    
+      end 
+    end 
+  
+    def self.find(id)
+      all.select { |vendor| vendor.id == id }.first
     end 
   end 
 end 
